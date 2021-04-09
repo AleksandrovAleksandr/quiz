@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import {connect} from 'react-redux'
+import AddAnswer from './components/AddAnswer/AddAnswer'
+import AnswersContainer from './components/AnswersContainer/AnswersContainer'
+import Question from './components/Question/Question'
+import TypeOfAnswer from './components/TypeOfAnswer/TypeOfAnswer'
+import './App.css'
 
-function App() {
+const App = ({state}) => {
+  function handleSubmit(e) {
+    e.preventDefault()
+    alert(JSON.stringify(state, null, 2))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <main className="App">
+      <section class="quiz-form-container">
+        <h2 class="visuallyhidden">Форма создания вопроса</h2>
+        <form class="quiz-form" onSubmit={handleSubmit}>
+          <Question />
+          <TypeOfAnswer />
+          <AnswersContainer />
+          <AddAnswer />
+          <div className="wrapper">
+            <button className="save-quiz" type="submit">
+              Готово
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+  )
 }
 
-export default App;
+const mapStateToProps = state => ({
+  state: state.app,
+})
+
+export default connect(mapStateToProps)(App)
